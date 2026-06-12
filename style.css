@@ -247,6 +247,32 @@ body[data-lang="ko"] .native { font-family: var(--font-ko); }
 }
 .speak-btn:hover { opacity: 1; transform: scale(1.15); }
 
+.mic-btn.listening {
+  opacity: 1;
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.speech-result {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-family: var(--font-ui);
+  line-height: 1.5;
+}
+.speech-result.info { background: var(--accent-soft); color: var(--ink-soft); }
+.speech-result.good { background: #e6f7ed; color: #18794e; border: 1px solid #b7e3c8; }
+.speech-result.ok   { background: #fff4e0; color: #946800; border: 1px solid #f0dcab; }
+.speech-result.bad  { background: #fdecec; color: #c0353a; border: 1px solid #f3c4c6; }
+.msg.right .speech-result.info { background: rgba(255,255,255,0.18); color: #fff; }
+.msg.right .speech-result.good,
+.msg.right .speech-result.ok,
+.msg.right .speech-result.bad { background: rgba(255,255,255,0.92); }
+
 .practice-hint {
   text-align: center;
   font-size: 0.88rem;

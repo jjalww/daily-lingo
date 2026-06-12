@@ -12,6 +12,7 @@ DailyLingo features natural, native-level dialogues — the way people actually 
 - 👆 **Practice mode** — translations are blurred; read each line out loud, then tap to check yourself
 - 🔤 **Toggleable readings** — show or hide romaji / romanization as you improve
 - 🔊 **Listen to every line** — audio via your browser's built-in Japanese and Korean voices
+- 🎤 **Speak and get scored** — say any line into your mic and the app rates how close you were (0–100%) and shows what it heard
 - 📖 **Key vocabulary** — the words worth remembering from each conversation
 - 💡 **Native speaker notes** — the cultural and slang context textbooks skip
 

@@ -57,6 +57,103 @@ function setLevel(level) {
   render();
 }
 
+// --- Speech recognition (speaking practice) ---
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+let activeRec = null;
+
+function normalize(text) {
+  return text
+    .toLowerCase()
+    .replace(/[\s、。！？!?.,・「」『』""''…~〜()（）\-]/g, "");
+}
+
+// Levenshtein distance for similarity scoring
+function editDistance(a, b) {
+  const m = a.length, n = b.length;
+  if (!m) return n;
+  if (!n) return m;
+  let prev = Array.from({ length: n + 1 }, (_, i) => i);
+  for (let i = 1; i <= m; i++) {
+    const cur = [i];
+    for (let j = 1; j <= n; j++) {
+      cur[j] = Math.min(
+        prev[j] + 1,
+        cur[j - 1] + 1,
+        prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+    }
+    prev = cur;
+  }
+  return prev[n];
+}
+
+function similarity(said, target) {
+  const a = normalize(said), b = normalize(target);
+  if (!a.length || !b.length) return 0;
+  return 1 - editDistance(a, b) / Math.max(a.length, b.length);
+}
+
+function showSpeechResult(box, cls, html) {
+  box.className = "speech-result " + cls;
+  box.innerHTML = html;
+  box.hidden = false;
+}
+
+function startListening(line, micBtn, resultBox) {
+  if (!SpeechRec) return;
+  if (activeRec) { activeRec.abort(); activeRec = null; }
+  window.speechSynthesis && window.speechSynthesis.cancel();
+
+  const rec = new SpeechRec();
+  activeRec = rec;
+  rec.lang = DATA[state.lang].voice;
+  rec.interimResults = false;
+  rec.maxAlternatives = 3;
+
+  micBtn.classList.add("listening");
+  micBtn.textContent = "👂";
+  showSpeechResult(resultBox, "info", "🎤 Listening… say the line out loud!");
+
+  const done = () => {
+    micBtn.classList.remove("listening");
+    micBtn.textContent = "🎤";
+    if (activeRec === rec) activeRec = null;
+  };
+
+  rec.onresult = e => {
+    done();
+    const alts = Array.from(e.results[0]);
+    // Score the best alternative the recognizer offers
+    let best = { said: alts[0].transcript, score: 0 };
+    alts.forEach(alt => {
+      const score = similarity(alt.transcript, line.t);
+      if (score > best.score) best = { said: alt.transcript, score };
+    });
+    const pct = Math.round(best.score * 100);
+    if (best.score >= 0.8) {
+      showSpeechResult(resultBox, "good", `💯 <b>${pct}% — Sounds great!</b><br>Heard: "${best.said}"`);
+    } else if (best.score >= 0.55) {
+      showSpeechResult(resultBox, "ok", `👍 <b>${pct}% — Close! Try once more.</b><br>Heard: "${best.said}"`);
+    } else {
+      showSpeechResult(resultBox, "bad", `🔁 <b>${pct}% — Keep practicing!</b><br>Heard: "${best.said}"<br>Tip: tap 🔊 to hear it again first.`);
+    }
+  };
+
+  rec.onerror = e => {
+    done();
+    if (e.error === "no-speech") {
+      showSpeechResult(resultBox, "bad", "🤔 I didn't hear anything — tap 🎤 and try again.");
+    } else if (e.error === "not-allowed" || e.error === "service-not-allowed") {
+      showSpeechResult(resultBox, "bad", "🎙️ Microphone is blocked. Allow mic access in your browser and try again.");
+    } else if (e.error !== "aborted") {
+      showSpeechResult(resultBox, "bad", "⚠️ Speech recognition hiccup — please try again.");
+    }
+  };
+
+  rec.onend = done;
+  rec.start();
+}
+
 function speak(text) {
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
@@ -115,6 +212,22 @@ function render() {
     });
     native.appendChild(speakBtn);
 
+    const resultBox = document.createElement("div");
+    resultBox.className = "speech-result";
+    resultBox.hidden = true;
+
+    if (SpeechRec) {
+      const micBtn = document.createElement("button");
+      micBtn.className = "speak-btn mic-btn";
+      micBtn.textContent = "🎤";
+      micBtn.title = "Say this line — I'll check your pronunciation";
+      micBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        startListening(line, micBtn, resultBox);
+      });
+      native.appendChild(micBtn);
+    }
+
     const reading = document.createElement("div");
     reading.className = "reading";
     reading.textContent = line.r;
@@ -123,7 +236,7 @@ function render() {
     english.className = "english";
     english.textContent = line.e;
 
-    bubble.append(native, reading, english);
+    bubble.append(native, reading, english, resultBox);
     bubble.addEventListener("click", () => {
       if (els.chat.classList.contains("practice")) {
         bubble.classList.toggle("revealed");
@@ -157,6 +270,7 @@ function render() {
 
   applyToggles();
   window.speechSynthesis && window.speechSynthesis.cancel();
+  if (activeRec) { activeRec.abort(); activeRec = null; }
 }
 
 function applyToggles() {
