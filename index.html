@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DailyLingo — Learn Japanese &amp; Korean through real conversations</title>
+<meta name="description" content="Learn Japanese and Korean with a new natural, native-level conversation every day. Pick your level, tap to reveal translations, and listen to every line.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-logo">💬</span>
+      <span class="brand-name">Daily<em>Lingo</em></span>
+    </div>
+    <div class="lang-switch" role="tablist" aria-label="Language">
+      <button class="lang-btn active" data-lang="ja" role="tab" aria-selected="true">🇯🇵 日本語</button>
+      <button class="lang-btn" data-lang="ko" role="tab" aria-selected="false">🇰🇷 한국어</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1 id="hero-title">One real conversation a day.</h1>
+    <p id="hero-sub">Natural, native-level dialogues — not textbook sentences. Pick your level, read along, tap to check yourself, and listen to every line.</p>
+    <div class="streak-chip" id="daily-chip">📅 <span id="daily-date"></span> · Today's conversation</div>
+  </section>
+
+  <section class="controls card">
+    <div class="control-group">
+      <span class="control-label">Your level</span>
+      <div class="level-pills" id="level-pills">
+        <button class="pill active" data-level="beginner">🌱 Beginner</button>
+        <button class="pill" data-level="intermediate">🌿 Intermediate</button>
+        <button class="pill" data-level="advanced">🌳 Advanced</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <span class="control-label">Study mode</span>
+      <div class="toggles">
+        <label class="toggle"><input type="checkbox" id="toggle-reading" checked><span class="slider"></span> Readings</label>
+        <label class="toggle"><input type="checkbox" id="toggle-english" checked><span class="slider"></span> English</label>
+        <label class="toggle"><input type="checkbox" id="toggle-practice"><span class="slider"></span> Practice mode</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="convo-header">
+    <div>
+      <div class="convo-scene" id="convo-scene"></div>
+      <h2 class="convo-title" id="convo-title"></h2>
+    </div>
+    <div class="convo-nav">
+      <button class="nav-btn" id="prev-convo" title="Previous conversation">‹</button>
+      <span class="convo-count" id="convo-count"></span>
+      <button class="nav-btn" id="next-convo" title="Next conversation">›</button>
+    </div>
+  </section>
+
+  <section class="chat" id="chat" aria-live="polite"></section>
+
+  <div class="practice-hint" id="practice-hint" hidden>👆 Practice mode: read the line out loud, then tap it to reveal the translation.</div>
+
+  <section class="vocab card" id="vocab-card">
+    <h3>📖 Key vocabulary</h3>
+    <div class="vocab-grid" id="vocab-grid"></div>
+  </section>
+
+  <section class="culture card" id="culture-card" hidden>
+    <h3>💡 Native speaker note</h3>
+    <p id="culture-note"></p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>Made for daily practice · A new conversation is featured every day · 🔊 audio uses your browser's built-in voices</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
