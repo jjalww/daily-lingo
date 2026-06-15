@@ -2,13 +2,13 @@
 
 **Learn Japanese and Korean through one real conversation a day.**
 
-DailyLingo features natural, native-level dialogues — the way people actually talk, not textbook sentences. A new conversation is featured every day, and you can browse the full library anytime.
+DailyLingo features natural, native-level dialogues — the way people actually talk, not textbook sentences. With **180 conversations** in the library (30 per level, per language), a different one is featured every single day, and you can browse the rest anytime.
 
 ## ✨ Features
 
 - 🇯🇵 **Japanese** and 🇰🇷 **Korean** — switch anytime
 - 🌱🌿🌳 **Three skill levels** — Beginner (polite basics), Intermediate (casual everyday talk), Advanced (full-speed native speech with real slang)
-- 📅 **Daily conversation** — a featured dialogue that rotates every day
+- 📅 **A different conversation every day** — 30 dialogues per level mean a full month with zero repeats before the cycle comes around
 - 👆 **Practice mode** — translations are blurred; read each line out loud, then tap to check yourself
 - 🔤 **Toggleable readings** — show or hide romaji / romanization as you improve
 - 🔊 **Listen to every line** — audio via your browser's built-in Japanese and Korean voices

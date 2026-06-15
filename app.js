@@ -29,11 +29,16 @@ function convos() {
 
 // Pick "today's conversation" deterministically from the date,
 // so everyone sees the same one on the same day and it changes daily.
+// A continuous day counter (days since the epoch, in local time) so the
+// featured conversation advances by exactly one every calendar day and
+// cycles through the WHOLE list before any repeat. With N conversations,
+// it takes N days to come back around.
 function dailyIndex() {
+  const n = convos().length;
+  if (!n) return 0;
   const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now - start) / 86400000);
-  return dayOfYear % convos().length;
+  const dayNumber = Math.floor((now.getTime() - now.getTimezoneOffset() * 60000) / 86400000);
+  return ((dayNumber % n) + n) % n;
 }
 
 function setLang(lang) {

@@ -25,7 +25,7 @@ Key features:
 • Listen to every line spoken in a native voice
 • Practice mode that hides translations so you can test yourself
 • Toggleable romaji/romanization, key vocabulary, and native-speaker culture notes on every dialogue
-• A daily-rotating featured conversation to build a learning habit
+• A library of 180 native-level conversations (30 per level, per language) with a different one featured every day to build a learning habit
 
 Built from scratch with vanilla HTML, CSS, and JavaScript — no frameworks — and deployed free via GitHub Pages. The conversation library is fully data-driven, so new dialogues can be added without touching the app logic.
 
