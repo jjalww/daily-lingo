@@ -50,3 +50,7 @@ Open `data.js` and copy any conversation block — each one is just:
   vocab: [{ w: "word", r: "reading", m: "meaning" }, ...]
 }
 ```
+
+## 📄 License
+
+Released under the [MIT License](LICENSE) — free to use, learn from, and build on.
